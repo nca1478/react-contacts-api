@@ -1,3 +1,3 @@
 export default {
-  dbConnection: require('./db'),
+    dbConnection: require('./db'),
 }
