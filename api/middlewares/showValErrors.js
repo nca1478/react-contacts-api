@@ -1,7 +1,7 @@
 // Dependencies
 const { validationResult } = require('express-validator')
 
-// Utils
+// Helpers
 import { responseError } from '../helpers/response'
 
 const showValErrors = (req, res, next) => {

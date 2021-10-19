@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'
 import { updateOptions } from '../helpers/dbOptions'
 
 class UserService {
@@ -42,6 +43,34 @@ class UserService {
         try {
             const result = await this.user.findByIdAndUpdate(id, { active: false }, updateOptions)
             return result
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async loginUser(dataLogin) {
+        const { email, password } = dataLogin
+
+        try {
+            const user = await this.user.findOne({ email, active: true })
+
+            if (user) {
+                let compare = bcrypt.compareSync(password, user.password)
+                const userInfo = {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    createdAt: user.createdAt,
+                }
+                if (compare) {
+                    return userInfo
+                } else {
+                    return compare
+                }
+            } else {
+                return user
+            }
         } catch (err) {
             throw err
         }

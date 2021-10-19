@@ -1,5 +1,5 @@
 // Validate Data
-import { createUserValidation, findByIdUserValidation } from './validateData'
+import { createUserValidation, findByIdUserValidation, loginUserValidation } from './validateData'
 
 class UserRouter {
     constructor(router, controller) {
@@ -44,6 +44,13 @@ class UserRouter {
             '/:id',
             findByIdUserValidation(),
             this.controller.delete.bind(this.controller),
+        )
+
+        // Login User
+        this.router.post(
+            '/login',
+            loginUserValidation(),
+            this.controller.login.bind(this.controller),
         )
     }
 

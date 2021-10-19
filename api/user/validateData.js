@@ -37,7 +37,21 @@ const findByIdUserValidation = () => {
     ]
 }
 
+/**
+ * Validate body request of login admin endpoint (POST /users/login)
+ * @return	{Array}		Rules of validation (express-validator)
+ */
+const loginUserValidation = () => {
+    return [
+        check('email').exists().withMessage('Email is required'),
+        check('email').isEmail().normalizeEmail().withMessage('Must be valid email'),
+        check('password').exists().withMessage('Password is required'),
+        showValErrors,
+    ]
+}
+
 module.exports = {
     createUserValidation,
     findByIdUserValidation,
+    loginUserValidation,
 }
