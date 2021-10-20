@@ -1,16 +1,11 @@
 // Validate Data
-import {
-    createUserValidation,
-    findByIdUserValidation,
-    loginUserValidation,
-    updateUserValidation,
-} from './validateData'
+import { createContactValidation, findByIdContactValidation } from './validateData'
 
 // Helpers
 import { showValErrors } from '../middlewares/showValErrors'
 import { verifyToken } from '../helpers/jwtHandler'
 
-class UserRouter {
+class ContactRouter {
     constructor(router, controller) {
         this.error = new Error()
 
@@ -28,42 +23,35 @@ class UserRouter {
             this.controller = controller
         }
 
-        // Create User
+        // Create Contact
         this.router.post(
             '/',
-            [createUserValidation(), showValErrors],
+            [verifyToken, createContactValidation(), showValErrors],
             this.controller.create.bind(this.controller),
         )
 
-        // Get Users
+        // Get Contacts
         this.router.get('/', [verifyToken], this.controller.find.bind(this.controller))
 
-        // Get User by ID
+        // Get Contact by ID
         this.router.get(
             '/:id',
-            [verifyToken, findByIdUserValidation(), showValErrors],
+            [verifyToken, findByIdContactValidation(), showValErrors],
             this.controller.findById.bind(this.controller),
         )
 
-        // Update User
+        // Update Contact
         this.router.put(
             '/:id',
-            [verifyToken, findByIdUserValidation(), updateUserValidation(), showValErrors],
+            [verifyToken, findByIdContactValidation(), createContactValidation(), showValErrors],
             this.controller.findByIdAndUpdate.bind(this.controller),
         )
 
-        // Delete User
+        // Delete Contact
         this.router.delete(
             '/:id',
-            [verifyToken, findByIdUserValidation(), showValErrors],
+            [verifyToken, findByIdContactValidation(), showValErrors],
             this.controller.delete.bind(this.controller),
-        )
-
-        // Login User
-        this.router.post(
-            '/login',
-            [loginUserValidation(), showValErrors],
-            this.controller.login.bind(this.controller),
         )
     }
 
@@ -72,4 +60,4 @@ class UserRouter {
     }
 }
 
-export default UserRouter
+export default ContactRouter

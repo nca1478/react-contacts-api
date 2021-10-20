@@ -6,6 +6,7 @@ import cors from 'cors'
 
 // Routes
 import { userRoutes } from '../user'
+import { contactRoutes } from '../contact'
 
 class Server {
     constructor() {
@@ -38,6 +39,7 @@ class Server {
 
     routes() {
         this.app.use('/api/v1/users', userRoutes)
+        this.app.use('/api/v1/contacts', contactRoutes)
     }
 
     listen() {

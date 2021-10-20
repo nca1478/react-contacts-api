@@ -65,7 +65,7 @@ class UserController extends UserService {
             }
             const result = await this.updateUser(id, dataUser)
             const response = responsePOST(result)
-            return res.status(201).json(response)
+            return res.status(200).json(response)
         } catch (err) {
             const error = responseError([err])
             res.status(500).json(error)
@@ -77,7 +77,7 @@ class UserController extends UserService {
             const id = req.params.id
             const result = await this.deleteUser(id)
             const response = responsePOST(result)
-            return res.status(201).json(response)
+            return res.status(200).json(response)
         } catch (err) {
             const error = responseError([err])
             res.status(500).json(error)
