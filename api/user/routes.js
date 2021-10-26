@@ -4,6 +4,7 @@ import {
     findByIdUserValidation,
     loginUserValidation,
     updateUserValidation,
+    loginGoogleValidation,
 } from './validateData'
 
 // Helpers
@@ -64,6 +65,13 @@ class UserRouter {
             '/login',
             [loginUserValidation(), showValErrors],
             this.controller.login.bind(this.controller),
+        )
+
+        // Login Google
+        this.router.post(
+            '/google',
+            [loginGoogleValidation(), showValErrors],
+            this.controller.google.bind(this.controller),
         )
     }
 

@@ -23,6 +23,10 @@ const userSchema = new Schema(
             enum: ['ADMIN_ROLE', 'USER_ROLE'],
             default: 'USER_ROLE',
         },
+        img: {
+            type: String,
+            default: '',
+        },
         google: {
             type: Boolean,
             default: false,

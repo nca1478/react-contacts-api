@@ -61,9 +61,18 @@ const loginUserValidation = () => {
     ]
 }
 
+/**
+ * Validate body request of login user endpoint (POST /users/google)
+ * @return	{Array}		Rules of validation (express-validator)
+ */
+const loginGoogleValidation = () => {
+    return [check('tokenId').exists().withMessage('Google tokenId is required')]
+}
+
 module.exports = {
     createUserValidation,
     findByIdUserValidation,
     updateUserValidation,
     loginUserValidation,
+    loginGoogleValidation,
 }

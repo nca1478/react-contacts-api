@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { updateOptions } from '../helpers/dbOptions'
+import { googleVerify } from '../helpers/googleVerify'
 
 class UserService {
     constructor(user) {
@@ -53,7 +54,6 @@ class UserService {
 
         try {
             const user = await this.user.findOne({ email, active: true })
-
             if (user) {
                 let compare = bcrypt.compareSync(password, user.password)
                 const userInfo = {
@@ -61,6 +61,8 @@ class UserService {
                     name: user.name,
                     email: user.email,
                     role: user.role,
+                    img: user.img,
+                    google: user.google,
                     createdAt: user.createdAt,
                 }
                 if (compare) {
@@ -70,6 +72,32 @@ class UserService {
                 }
             } else {
                 return user
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async loginGoogle(tokenId) {
+        try {
+            const { email, name, img } = await googleVerify(tokenId)
+            const user = await this.user.findOne({ email })
+            if (!user) {
+                const userInfo = {
+                    name,
+                    email,
+                    password: ':P',
+                    img,
+                    google: true,
+                }
+                const result = await this.user.create(userInfo)
+                return result
+            } else {
+                if (user.active) {
+                    return user
+                } else {
+                    return null
+                }
             }
         } catch (err) {
             throw err
