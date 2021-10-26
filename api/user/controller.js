@@ -23,7 +23,11 @@ class UserController extends UserService {
                 role: req.body.role,
             }
             const result = await this.createUser(dataUser)
-            const response = responsePOST(result)
+            const response = responsePOST({
+                msg: 'Create Successfully.',
+                user: result,
+                token: sendTokenUser(result),
+            })
             return res.status(201).json(response)
         } catch (err) {
             const error = responseError([err])
