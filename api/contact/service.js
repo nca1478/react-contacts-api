@@ -22,7 +22,7 @@ class ContactService {
     }
 
     async findContacts(userId) {
-        return this.contact.find({ active: true, user: userId })
+        return this.contact.find({ active: true, user: userId }).sort('name')
     }
 
     async findContactById(id) {

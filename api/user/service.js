@@ -94,7 +94,16 @@ class UserService {
                 return result
             } else {
                 if (user.active) {
-                    return user
+                    const userInfo = {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        img: user.img,
+                        google: user.google,
+                        createdAt: user.createdAt,
+                    }
+                    return userInfo
                 } else {
                     return null
                 }
