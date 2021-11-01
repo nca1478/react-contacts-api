@@ -33,6 +33,9 @@ class ContactRouter {
         // Get Contacts
         this.router.get('/', [verifyToken], this.controller.find.bind(this.controller))
 
+        // Count Contacts
+        this.router.get('/count', [verifyToken], this.controller.count.bind(this.controller))
+
         // Get Contact by ID
         this.router.get(
             '/:id',

@@ -21,8 +21,17 @@ class ContactService {
         }
     }
 
-    async findContacts(userId) {
-        return this.contact.find({ active: true, user: userId }).sort('name')
+    async findContacts(dataContact) {
+        const { userId, limit, skip } = dataContact
+        return this.contact
+            .find({ active: true, user: userId })
+            .sort('name')
+            .limit(limit)
+            .skip(skip)
+    }
+
+    async countContacts(userId) {
+        return this.contact.countDocuments({ active: true, user: userId })
     }
 
     async findContactById(id) {
