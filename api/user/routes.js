@@ -5,6 +5,7 @@ import {
     loginUserValidation,
     updateUserValidation,
     loginGoogleValidation,
+    loginFacebookValidation,
 } from './validateData'
 
 // Helpers
@@ -72,6 +73,13 @@ class UserRouter {
             '/google',
             [loginGoogleValidation(), showValErrors],
             this.controller.google.bind(this.controller),
+        )
+
+        // Login Facebook
+        this.router.post(
+            '/facebook',
+            [loginFacebookValidation(), showValErrors],
+            this.controller.facebook.bind(this.controller),
         )
     }
 

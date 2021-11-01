@@ -69,10 +69,22 @@ const loginGoogleValidation = () => {
     return [check('tokenId').exists().withMessage('Google tokenId is required')]
 }
 
+/**
+ * Validate body request of login user endpoint (POST /users/facebook)
+ * @return	{Array}		Rules of validation (express-validator)
+ */
+const loginFacebookValidation = () => {
+    return [
+        check('accessToken').exists().withMessage('Facebook accessToken is required'),
+        check('userID').exists().withMessage('Facebook userID is required'),
+    ]
+}
+
 module.exports = {
     createUserValidation,
     findByIdUserValidation,
     updateUserValidation,
     loginUserValidation,
     loginGoogleValidation,
+    loginFacebookValidation,
 }

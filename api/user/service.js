@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { updateOptions } from '../helpers/dbOptions'
 import { googleVerify } from '../helpers/googleVerify'
+import axios from 'axios'
 
 class UserService {
     constructor(user) {
@@ -89,6 +90,7 @@ class UserService {
                     password: ':P',
                     img,
                     google: true,
+                    facebook: false,
                 }
                 const result = await this.user.create(userInfo)
                 return result
@@ -101,6 +103,51 @@ class UserService {
                         role: user.role,
                         img: user.img,
                         google: user.google,
+                        facebook: user.facebook,
+                        createdAt: user.createdAt,
+                    }
+                    return userInfo
+                } else {
+                    return null
+                }
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async loginFacebook({ userID, accessToken }) {
+        try {
+            const urlGraphFacebook = `https://graph.facebook.com/${userID}?fields=id,name,email,picture&access_token=${accessToken}`
+            const response = await axios.get(urlGraphFacebook)
+            const facebookData = {
+                email: response.data.email,
+                name: response.data.name,
+                img: response.data.picture.data.url,
+            }
+
+            const user = await this.user.findOne({ email: facebookData.email })
+            if (!user) {
+                const userInfo = {
+                    name: facebookData.name,
+                    email: facebookData.email,
+                    password: ':P',
+                    img: facebookData.img,
+                    google: false,
+                    facebook: true,
+                }
+                const result = await this.user.create(userInfo)
+                return result
+            } else {
+                if (user.active) {
+                    const userInfo = {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        img: user.img,
+                        google: user.google,
+                        facebook: user.facebook,
                         createdAt: user.createdAt,
                     }
                     return userInfo

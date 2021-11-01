@@ -31,6 +31,10 @@ const userSchema = new Schema(
             type: Boolean,
             default: false,
         },
+        facebook: {
+            type: Boolean,
+            default: false,
+        },
         active: {
             type: Boolean,
             default: true,

@@ -9,6 +9,7 @@ const sendTokenUser = user => {
         role: user.role,
         img: user.img,
         google: user.google,
+        facebook: user.facebook,
         createdAt: user.createdAt,
     }
 
