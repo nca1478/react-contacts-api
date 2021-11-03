@@ -38,6 +38,14 @@ class ContactService {
         return this.contact.findById(id)
     }
 
+    async findContactsByName(userId, search) {
+        const rgx = pattern => new RegExp(`.*${pattern}.*`)
+        const searchRgx = rgx(search)
+        return this.contact
+            .find({ active: true, user: userId, name: { $regex: searchRgx, $options: 'i' } })
+            .sort('name')
+    }
+
     async updateContact(id, dataContact) {
         try {
             const result = await this.contact.findByIdAndUpdate(id, dataContact, updateOptions)

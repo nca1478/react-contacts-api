@@ -59,6 +59,18 @@ class ContactController extends ContactService {
         }
     }
 
+    async findByName(req, res) {
+        try {
+            const userId = req.user.id
+            const result = await this.findContactsByName(userId, req.body.name)
+            const response = responseGET(null, result)
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
     async findByIdAndUpdate(req, res) {
         try {
             const id = req.params.id
