@@ -50,6 +50,19 @@ class UserService {
         }
     }
 
+    setUserInfo = user => {
+        return {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            img: user.img,
+            google: user.google,
+            facebook: user.facebook,
+            createdAt: user.createdAt,
+        }
+    }
+
     async loginUser(dataLogin) {
         const { email, password } = dataLogin
 
@@ -57,15 +70,7 @@ class UserService {
             const user = await this.user.findOne({ email, active: true })
             if (user) {
                 let compare = bcrypt.compareSync(password, user.password)
-                const userInfo = {
-                    id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    img: user.img,
-                    google: user.google,
-                    createdAt: user.createdAt,
-                }
+                const userInfo = this.setUserInfo(user)
                 if (compare) {
                     return userInfo
                 } else {
@@ -96,16 +101,7 @@ class UserService {
                 return result
             } else {
                 if (user.active) {
-                    const userInfo = {
-                        id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        img: user.img,
-                        google: user.google,
-                        facebook: user.facebook,
-                        createdAt: user.createdAt,
-                    }
+                    const userInfo = this.setUserInfo(user)
                     return userInfo
                 } else {
                     return null
@@ -140,16 +136,7 @@ class UserService {
                 return result
             } else {
                 if (user.active) {
-                    const userInfo = {
-                        id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        img: user.img,
-                        google: user.google,
-                        facebook: user.facebook,
-                        createdAt: user.createdAt,
-                    }
+                    const userInfo = this.setUserInfo(user)
                     return userInfo
                 } else {
                     return null
