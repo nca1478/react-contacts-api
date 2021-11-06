@@ -61,15 +61,22 @@ class UserController extends UserService {
 
     async findByIdAndUpdate(req, res) {
         try {
-            const id = req.params.id
             const dataUser = {
+                id: req.user.id,
                 name: req.body.name,
                 email: req.body.email,
-                password: bcrypt.hashSync(req.body.password),
             }
-            const result = await this.updateUser(id, dataUser)
-            const response = responsePOST(result)
-            return res.status(200).json(response)
+            const password = req.body.password
+            const result = await this.updateUser(dataUser, password)
+            if (!result) {
+                const error = responseError({
+                    msg: 'Password is not correct',
+                })
+                return res.status(401).json(error)
+            } else {
+                const response = responsePOST(result)
+                return res.status(200).json(response)
+            }
         } catch (err) {
             const error = responseError([err])
             res.status(500).json(error)

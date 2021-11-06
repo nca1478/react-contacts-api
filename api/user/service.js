@@ -32,10 +32,20 @@ class UserService {
         return this.user.findById(id)
     }
 
-    async updateUser(id, dataUser) {
+    async updateUser(dataUser, password) {
         try {
-            const result = await this.user.findByIdAndUpdate(id, dataUser, updateOptions)
-            return result
+            const user = await this.user.findOne({ id: dataUser.id })
+            let compare = bcrypt.compareSync(password, user.password)
+            if (compare) {
+                const result = await this.user.findByIdAndUpdate(
+                    dataUser.id,
+                    dataUser,
+                    updateOptions,
+                )
+                return result
+            } else {
+                return compare
+            }
         } catch (err) {
             throw err
         }
