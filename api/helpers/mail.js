@@ -1,0 +1,43 @@
+const nodemailer = require('nodemailer')
+
+const forgotPass = (email, token) => {
+    const subject = 'Recover your password'
+    const urlClient = process.env.URL_CLIENT
+    const urlRedirect = `${urlClient}/change-password?token=${token}`
+    const templateHTML = `
+		<h1>Password reset instructions</h1>
+        <p>
+            We received a request to reset the password. This link is valid for the next 24 hours: &nbsp;
+            <a href="${urlRedirect}">Recover Password</a>
+        </p>        		
+	`
+    return sendMailInfo(email, subject, templateHTML)
+}
+
+const sendMailInfo = async (to, subject, templateHTML) => {
+    const transporter = nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: true,
+        auth: {
+            user: process.env.EMAIL_AUTH_USER,
+            pass: process.env.EMAIL_AUTH_PASS,
+        },
+        tls: {
+            rejectUnauthorized: false,
+        },
+    })
+
+    const info = await transporter.sendMail({
+        from: "'React Contacts App' <test@uecgmaweb.com>",
+        to,
+        subject,
+        html: templateHTML,
+    })
+
+    return info
+}
+
+module.exports = {
+    forgotPass,
+}

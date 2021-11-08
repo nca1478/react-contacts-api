@@ -176,6 +176,28 @@ class UserController extends UserService {
             return res.status(500).json(error)
         }
     }
+
+    async sendEmailRecovery(req, res) {
+        try {
+            let result = await this.sendEmailRecoveryPass(req.body.email)
+            if (result.accepted[0].length > 0) {
+                const data = {
+                    msg: 'Email sended succesfully.',
+                    messageId: result.messageId,
+                }
+                const response = responsePOST(data)
+                return res.status(200).json(response)
+            } else {
+                const error = responseError({
+                    msg: 'User not found or email rejected',
+                })
+                return res.status(401).json(error)
+            }
+        } catch (err) {
+            const error = responseError([err])
+            return res.status(500).json(error)
+        }
+    }
 }
 
 export default UserController

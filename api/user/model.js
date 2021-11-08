@@ -35,6 +35,10 @@ const userSchema = new Schema(
             type: Boolean,
             default: false,
         },
+        tokenRecovery: {
+            type: String,
+            default: '',
+        },
         active: {
             type: Boolean,
             default: true,

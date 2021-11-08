@@ -81,6 +81,9 @@ class UserRouter {
             [loginFacebookValidation(), showValErrors],
             this.controller.facebook.bind(this.controller),
         )
+
+        // Send Email to Recover Password
+        this.router.put('/recovery', this.controller.sendEmailRecovery.bind(this.controller))
     }
 
     setRoutes() {

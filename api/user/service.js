@@ -1,7 +1,12 @@
+// Dependencies
+import axios from 'axios'
 import bcrypt from 'bcryptjs'
+
+// Helpers
 import { updateOptions } from '../helpers/dbOptions'
 import { googleVerify } from '../helpers/googleVerify'
-import axios from 'axios'
+import { forgotPass } from '../helpers/mail'
+import { recoveryToken } from '../helpers/sendToken'
 
 class UserService {
     constructor(user) {
@@ -151,6 +156,31 @@ class UserService {
                 } else {
                     return null
                 }
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async sendEmailRecoveryPass(email) {
+        try {
+            const user = await this.user.findOne({
+                email,
+                active: true,
+                google: false,
+                facebook: false,
+            })
+            if (user) {
+                const tokenRecovery = recoveryToken(email)
+                const result = await this.user.findOneAndUpdate(
+                    { email, active: true },
+                    { tokenRecovery },
+                    updateOptions,
+                )
+                const responseEmail = await forgotPass(email, tokenRecovery)
+                return responseEmail
+            } else {
+                return user
             }
         } catch (err) {
             throw err
