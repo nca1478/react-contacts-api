@@ -77,6 +77,28 @@ const loginFacebookValidation = () => {
     ]
 }
 
+/**
+ * Validate body request of login user endpoint (POST /users/recovery)
+ * @return	{Array}		Rules of validation (express-validator)
+ */
+const emailRecoveryValidation = () => {
+    return [check('email').exists().withMessage('Email is required')]
+}
+
+/**
+ * Validate body request of recovery password (POST /users/recovery/:token)
+ * @return	{Array}		Rules of validation (express-validator)
+ */
+const recoveryPassValidation = () => {
+    return [
+        check('email').exists().withMessage('Email is required'),
+        check('newPassword').exists().withMessage('New password is required'),
+        check('newPassword')
+            .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!"#$%&()=?¿*-_.:,;+^\\-`.+,/]{8,}$/)
+            .withMessage('Password should contain at least 8 characters and at least 1 number'),
+    ]
+}
+
 module.exports = {
     createUserValidation,
     findByIdUserValidation,
@@ -84,4 +106,6 @@ module.exports = {
     loginUserValidation,
     loginGoogleValidation,
     loginFacebookValidation,
+    emailRecoveryValidation,
+    recoveryPassValidation,
 }

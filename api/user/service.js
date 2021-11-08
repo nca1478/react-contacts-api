@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs'
 // Helpers
 import { updateOptions } from '../helpers/dbOptions'
 import { googleVerify } from '../helpers/googleVerify'
-import { forgotPass } from '../helpers/mail'
+import { forgotPass, passChanged } from '../helpers/mail'
 import { recoveryToken } from '../helpers/sendToken'
 
 class UserService {
@@ -39,7 +39,7 @@ class UserService {
 
     async updateUser(dataUser, password) {
         try {
-            const user = await this.user.findOne({ id: dataUser.id })
+            const user = await this.user.findOne({ id: dataUser.id, email: dataUser.email })
             let compare = bcrypt.compareSync(password, user.password)
             if (compare) {
                 const result = await this.user.findByIdAndUpdate(
@@ -179,6 +179,29 @@ class UserService {
                 )
                 const responseEmail = await forgotPass(email, tokenRecovery)
                 return responseEmail
+            } else {
+                return user
+            }
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async recoveryPassword(data) {
+        const { email, password, token } = data
+        try {
+            let user = await this.user.findOne({ email, tokenRecovery: token, active: true })
+            if (user) {
+                let newPassword = bcrypt.hashSync(password)
+                let userResponse = await this.user.findOneAndUpdate(
+                    { email, active: true },
+                    { password: newPassword, tokenRecovery: null },
+                    updateOptions,
+                )
+                if (userResponse) {
+                    const responseEmail = await passChanged(email)
+                    return responseEmail
+                }
             } else {
                 return user
             }
