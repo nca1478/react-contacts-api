@@ -41,7 +41,7 @@ const sendMailInfo = async (to, subject, templateHTML) => {
     })
 
     const info = await transporter.sendMail({
-        from: "'React Contacts App' <test@uecgmaweb.com>",
+        from: `'React Contacts App' <${process.env.EMAIL_AUTH_USER}>`,
         to,
         subject,
         html: templateHTML,
