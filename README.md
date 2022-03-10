@@ -1,6 +1,6 @@
 # Contacts Api
 
-`Contacts Api` is the backend for the `React Contacts App` project.
+`Contacts Api` is the backend for the React Contacts App project.
 
 ## Features
 
@@ -8,7 +8,7 @@
 -   Users Authentication Endpoints.
 -   Data and token validation through middlewares.
 -   Endpoints protected by JSON Web Token.
--   Models and Database hosted by `MongoDB Atlas`.
+-   Models and Database hosted by MongoDB Atlas.
 -   Sending notifications by email.
 
 ## Purpose of project
