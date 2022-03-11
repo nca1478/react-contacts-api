@@ -35,11 +35,11 @@
 
 ## Demo React Contacts App
 
--   [React Contacts App](https://google.com)
+-   [React Contacts App](https://contacts-app-njca.netlify.app/)
 
 ## Repo React Contacts App
 
--   [React Contacts App](https://google.com)
+-   [React Contacts App](https://github.com/nca1478/react-contacts-app)
 
 ## Requirements
 
