@@ -1,6 +1,6 @@
-# Contacts Api
+# Contactos Api
 
-`Contacts Api` es el backend para la Aplicación de Contactos desarrollada en React.
+`Contactos Api` es el backend para la Aplicación de Contactos desarrollada en React.
 
 ## Características
 
@@ -33,13 +33,13 @@
 -   [Nodemailer](https://nodemailer.com/about/)
 -   [Vscode](https://code.visualstudio.com/)
 
-## Demo React Contacts App
+## Demo React Contactos App
 
--   [React Contacts App](https://contacts-app-njca.netlify.app/)
+-   [React Contactos App](https://contacts-app-njca.netlify.app/)
 
-## Repo React Contacts App
+## Repo React Contactos App
 
--   [React Contacts App](https://github.com/nca1478/react-contacts-app)
+-   [React Contactos App](https://github.com/nca1478/react-contacts-app)
 
 ## Requerimientos
 
