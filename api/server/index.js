@@ -45,7 +45,9 @@ class Server {
     listen() {
         const port = process.env.PORT
         this.app.listen(port, () => {
-            console.log(`${chalk.yellow('[contacts-api:REST]')} Listening on port ${port}`)
+            console.log(
+                `${chalk.yellow('[contacts-api:REST]')} Servidor iniciado en puerto ${port}`,
+            )
         })
     }
 }

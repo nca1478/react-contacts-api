@@ -1,19 +1,19 @@
 # Contacts Api
 
-`Contacts Api` is the backend for the React Contacts App project.
+`Contacts Api` es el backend para la Aplicación de Contactos desarrollada en React.
 
-## Features
+## Características
 
--   Users Contacts Endpoints.
--   Users Authentication Endpoints.
--   Data and token validation through middlewares.
--   Endpoints protected by JSON Web Token.
--   Models and Database hosted by MongoDB Atlas.
--   Sending notifications by email.
+-   Endpoints para contactos del usuario.
+-   Endpoints para autenticación de usuarios.
+-   Validación de Datos y Token a través de middlewares.
+-   Endpoints protegidos por JSON Web Token.
+-   Modelos y Base de Datos alojada en MongoDB Atlas.
+-   Envío de notificaciones por email.
 
-## Purpose of project
+## Propósito del Proyecto
 
--   This project was development to apply and practice the backend technologies shown below.
+-   Este proyecto fue desarrollado para aplicar y practicar las tecnologías de back-end que se muestran a continuación.
 
 ## Tech Stack
 
@@ -24,7 +24,7 @@
 -   MongoDB Atlas.
 -   Nodemailer.
 
-## Development tools and other Technologies
+## Herramientas de Desarrollo y otras Tecnologías
 
 -   [ExpressJS](https://expressjs.com/)
 -   [MongoDB Atlas](https://www.mongodb.com/atlas/database)
@@ -41,18 +41,18 @@
 
 -   [React Contacts App](https://github.com/nca1478/react-contacts-app)
 
-## Requirements
+## Requerimientos
 
--   Nodejs v14 or better.
+-   Nodejs v14 o superior.
 
-## Installation
+## Instalación
 
 > npm install
 
-## Run the api
+## Ejecutar la api
 
 > npm run dev
 
-## Enter file
+## Archivo de entrada
 
 > index.js

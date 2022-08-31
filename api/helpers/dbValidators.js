@@ -4,35 +4,35 @@ import Contact from '../contact/model'
 const userExistsById = async id => {
     const userExists = await User.findById(id)
     if (!userExists) {
-        throw new Error(`User with ID ${id} does not exists`)
+        throw new Error(`Usuario con ID ${id} no existe`)
     }
 }
 
 const userExistsByState = async id => {
     const userExists = await User.findOne({ _id: id, active: true })
     if (!userExists) {
-        throw new Error(`User with ID ${id} does not active`)
+        throw new Error(`Usuario con ID ${id} no está activo`)
     }
 }
 
 const userExistsByEmail = async (email = '') => {
     const userExists = await User.findOne({ email })
     if (userExists) {
-        throw new Error(`Email ${email} is already exists`)
+        throw new Error(`Email ${email} ya existe`)
     }
 }
 
 const contactExistsById = async id => {
     const contactExists = await Contact.findById(id)
     if (!contactExists) {
-        throw new Error(`Contact with ID ${id} does not exists`)
+        throw new Error(`Contacto con ID ${id} no existe`)
     }
 }
 
 const contactExistsByState = async id => {
     const contactExists = await Contact.findOne({ _id: id, active: true })
     if (!contactExists) {
-        throw new Error(`Contact with ID ${id} does not active`)
+        throw new Error(`Contacto con ID ${id} no está activo`)
     }
 }
 
