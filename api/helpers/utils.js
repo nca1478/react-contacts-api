@@ -3,7 +3,7 @@ const isEmail = email => {
 
     if (email) {
         if (!emailRegex.test(email)) {
-            throw new Error(`Email Must be valid`)
+            throw new Error(`Email debe ser válido`)
         }
     }
 
@@ -15,7 +15,7 @@ const isURL = url => {
 
     if (url) {
         if (!urlRegex.test(url)) {
-            throw new Error(`URL Must be valid`)
+            throw new Error(`URL debe ser válida`)
         }
     }
 

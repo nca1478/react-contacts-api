@@ -15,17 +15,17 @@ db.connect(dbUri, {
 })
 
 db.connection.on('connected', () => {
-    console.log(`${chalk.green('[contacts-api:DB]')} MongoDB connected`)
+    console.log(`${chalk.green('[contacts-api:DB]')} MongoDB conectado`)
     debug('MongoDB connection open to ' + dbUri)
 })
 
 db.connection.on('error', error => {
     console.log(error)
-    console.log(`${chalk.red('[contacts-api:DB]')} MongoDB connection error ${error}`)
+    console.log(`${chalk.red('[contacts-api:DB]')} MongoDB error de conexión ${error}`)
 })
 
 db.connection.on('disconnected', () => {
-    console.log(`${chalk.red('[contacts-api:DB]')} MongoDB connection disconnected`)
+    console.log(`${chalk.red('[contacts-api:DB]')} MongoDB conexión desconectada`)
 })
 
 process.on('SIGINT', () => {
@@ -33,7 +33,7 @@ process.on('SIGINT', () => {
         console.log(
             `${chalk.red(
                 '[contacts-api:DB]',
-            )} MongoDB connection disconnected through app termination`,
+            )} MongoDB conexión desconectada a través de la terminación de la aplicación`,
         )
         process.exit(0)
     })

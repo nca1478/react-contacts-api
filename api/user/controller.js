@@ -24,7 +24,7 @@ class UserController extends UserService {
             }
             const result = await this.createUser(dataUser)
             const response = responsePOST({
-                msg: 'Create Successfully.',
+                msg: 'Usuario creado con éxito.',
                 user: result,
                 token: sendTokenUser(result),
             })
@@ -70,7 +70,7 @@ class UserController extends UserService {
             const result = await this.updateUser(dataUser, password)
             if (!result) {
                 const error = responseError({
-                    msg: 'Password is not correct',
+                    msg: 'Contraseña no es correcta',
                 })
                 return res.status(401).json(error)
             } else {
@@ -104,7 +104,7 @@ class UserController extends UserService {
             let result = await this.loginUser(dataLogin)
             if (result) {
                 const data = {
-                    msg: 'Login Successfully.',
+                    msg: 'Login Exitoso.',
                     user: result,
                     token: sendTokenUser(result),
                 }
@@ -113,12 +113,12 @@ class UserController extends UserService {
             } else {
                 if (result === null) {
                     const error = responseError({
-                        msg: "The email doesn't exist or user is not active",
+                        msg: 'El correo electrónico no existe o el usuario no está activo.',
                     })
                     return res.status(404).json(error)
                 } else {
                     const error = responseError({
-                        msg: 'The combination of email and password does not exist',
+                        msg: 'La combinación de correo electrónico y contraseña no existe.',
                     })
                     return res.status(401).json(error)
                 }
@@ -135,7 +135,7 @@ class UserController extends UserService {
             let result = await this.loginGoogle(tokenId)
             if (result) {
                 const data = {
-                    msg: 'Google Login Successfully.',
+                    msg: 'Login de Google Exitoso.',
                     user: result,
                     token: sendTokenUser(result),
                 }
@@ -143,7 +143,7 @@ class UserController extends UserService {
                 return res.status(200).json(response)
             } else {
                 const error = responseError({
-                    msg: 'User is not active',
+                    msg: 'El Usuario no está activo.',
                 })
                 return res.status(404).json(error)
             }
@@ -159,7 +159,7 @@ class UserController extends UserService {
             let result = await this.loginFacebook(facebookData)
             if (result) {
                 const data = {
-                    msg: 'Facebook Login Successfully.',
+                    msg: 'Login de Facebook Exitoso.',
                     user: result,
                     token: sendTokenUser(result),
                 }
@@ -167,7 +167,7 @@ class UserController extends UserService {
                 return res.status(200).json(response)
             } else {
                 const error = responseError({
-                    msg: 'User is not active',
+                    msg: 'El Usuario no está activo.',
                 })
                 return res.status(404).json(error)
             }
@@ -182,14 +182,14 @@ class UserController extends UserService {
             let result = await this.sendEmailRecoveryPass(req.body.email)
             if (result) {
                 const data = {
-                    msg: 'Email sended succesfully.',
+                    msg: 'Email enviado exitosamente.',
                     messageId: result.messageId,
                 }
                 const response = responsePOST(data)
                 return res.status(200).json(response)
             } else {
                 const error = responseError({
-                    msg: 'Email not found or not allowed to change password',
+                    msg: 'Correo electrónico no encontrado o no permite cambiar contraseña',
                 })
                 return res.status(401).json(error)
             }
@@ -209,14 +209,14 @@ class UserController extends UserService {
             let result = await this.recoveryPassword(data)
             if (result.accepted[0].length > 0) {
                 const dataResponse = {
-                    msg: 'Password changed succesfully.',
+                    msg: 'Contraseña cambiada con éxito.',
                     messageId: result.messageId,
                 }
                 const response = responsePOST(dataResponse)
                 return res.status(200).json(response)
             } else {
                 const error = responseError({
-                    msg: 'Error recover password. Try again.',
+                    msg: 'Error al recuperar contraseña. Intente nuevamente.',
                 })
                 return res.status(400).json(error)
             }

@@ -11,9 +11,9 @@ import { contactExistsById, contactExistsByState } from '../helpers/dbValidators
  */
 const createContactValidation = () => {
     return [
-        check('name').exists().withMessage('Name is required'),
-        check('celphone1').exists().withMessage('Celphone1 is required'),
-        check('address').exists().withMessage('Address is required'),
+        check('name').exists().withMessage('El nombre es requerido'),
+        check('celphone1').exists().withMessage('Numero de Celular es requerido'),
+        check('address').exists().withMessage('Dirección es requerida'),
         check('email').custom(isEmail),
         check('website').custom(isURL),
     ]
@@ -25,7 +25,7 @@ const createContactValidation = () => {
  */
 const findByIdContactValidation = () => {
     return [
-        check('id', 'Is not a mongoDB ID correct').isMongoId(),
+        check('id', 'No es un ID correcto de MondoDB').isMongoId(),
         check('id').custom(contactExistsById),
         check('id').custom(contactExistsByState),
     ]
