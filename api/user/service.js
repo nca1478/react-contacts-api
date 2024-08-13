@@ -1,71 +1,78 @@
 // Dependencies
-import axios from 'axios'
-import bcrypt from 'bcryptjs'
+import axios from 'axios';
+import bcrypt from 'bcryptjs';
 
 // Helpers
-import { updateOptions } from '../helpers/dbOptions'
-import { googleVerify } from '../helpers/googleVerify'
-import { forgotPass, passChanged } from '../helpers/mail'
-import { recoveryToken } from '../helpers/sendToken'
+import { updateOptions } from '../helpers/dbOptions';
+import { googleVerify } from '../helpers/googleVerify';
+import { forgotPass, passChanged } from '../helpers/mail';
+import { recoveryToken } from '../helpers/sendToken';
 
 class UserService {
     constructor(user) {
-        this.error = new Error()
+        this.error = new Error();
 
         if (!user) {
-            this.error.dependencyError = 'User Model is undefined'
-            throw this.error.dependencyError
+            this.error.dependencyError = 'User Model is undefined';
+            throw this.error.dependencyError;
         } else {
-            this.user = user
+            this.user = user;
         }
     }
 
     async createUser(dataUser) {
         try {
-            const result = await this.user.create(dataUser)
-            return result
+            const result = await this.user.create(dataUser);
+            return result;
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
     async findUsers() {
-        return this.user.find({ active: true })
+        return this.user.find({ active: true });
     }
 
     async findUserById(id) {
-        return this.user.findById(id)
+        return this.user.findById(id);
     }
 
     async updateUser(dataUser, password) {
         try {
-            const user = await this.user.findOne({ id: dataUser.id, email: dataUser.email })
-            let compare = bcrypt.compareSync(password, user.password)
+            const user = await this.user.findOne({
+                id: dataUser.id,
+                email: dataUser.email,
+            });
+            let compare = bcrypt.compareSync(password, user.password);
             if (compare) {
                 const result = await this.user.findByIdAndUpdate(
                     dataUser.id,
                     dataUser,
                     updateOptions,
-                )
-                return result
+                );
+                return result;
             } else {
-                return compare
+                return compare;
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
     async deleteUser(id) {
         try {
-            const result = await this.user.findByIdAndUpdate(id, { active: false }, updateOptions)
-            return result
+            const result = await this.user.findByIdAndUpdate(
+                id,
+                { active: false },
+                updateOptions,
+            );
+            return result;
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
-    setUserInfo = user => {
+    setUserInfo = (user) => {
         return {
             id: user._id,
             name: user.name,
@@ -75,34 +82,34 @@ class UserService {
             google: user.google,
             facebook: user.facebook,
             createdAt: user.createdAt,
-        }
-    }
+        };
+    };
 
     async loginUser(dataLogin) {
-        const { email, password } = dataLogin
+        const { email, password } = dataLogin;
 
         try {
-            const user = await this.user.findOne({ email, active: true })
+            const user = await this.user.findOne({ email, active: true });
             if (user) {
-                let compare = bcrypt.compareSync(password, user.password)
-                const userInfo = this.setUserInfo(user)
+                let compare = bcrypt.compareSync(password, user.password);
+                const userInfo = this.setUserInfo(user);
                 if (compare) {
-                    return userInfo
+                    return userInfo;
                 } else {
-                    return compare
+                    return compare;
                 }
             } else {
-                return user
+                return user;
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
     async loginGoogle(tokenId) {
         try {
-            const { email, name, img } = await googleVerify(tokenId)
-            const user = await this.user.findOne({ email })
+            const { email, name, img } = await googleVerify(tokenId);
+            const user = await this.user.findOne({ email });
             if (!user) {
                 const userInfo = {
                     name,
@@ -111,33 +118,33 @@ class UserService {
                     img,
                     google: true,
                     facebook: false,
-                }
-                const result = await this.user.create(userInfo)
-                return result
+                };
+                const result = await this.user.create(userInfo);
+                return result;
             } else {
                 if (user.active) {
-                    const userInfo = this.setUserInfo(user)
-                    return userInfo
+                    const userInfo = this.setUserInfo(user);
+                    return userInfo;
                 } else {
-                    return null
+                    return null;
                 }
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
     async loginFacebook({ userID, accessToken }) {
         try {
-            const urlGraphFacebook = `https://graph.facebook.com/${userID}?fields=id,name,email,picture&access_token=${accessToken}`
-            const response = await axios.get(urlGraphFacebook)
+            const urlGraphFacebook = `https://graph.facebook.com/${userID}?fields=id,name,email,picture&access_token=${accessToken}`;
+            const response = await axios.get(urlGraphFacebook);
             const facebookData = {
                 email: response.data.email,
                 name: response.data.name,
                 img: response.data.picture.data.url,
-            }
+            };
 
-            const user = await this.user.findOne({ email: facebookData.email })
+            const user = await this.user.findOne({ email: facebookData.email });
             if (!user) {
                 const userInfo = {
                     name: facebookData.name,
@@ -146,19 +153,19 @@ class UserService {
                     img: facebookData.img,
                     google: false,
                     facebook: true,
-                }
-                const result = await this.user.create(userInfo)
-                return result
+                };
+                const result = await this.user.create(userInfo);
+                return result;
             } else {
                 if (user.active) {
-                    const userInfo = this.setUserInfo(user)
-                    return userInfo
+                    const userInfo = this.setUserInfo(user);
+                    return userInfo;
                 } else {
-                    return null
+                    return null;
                 }
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
@@ -169,46 +176,50 @@ class UserService {
                 active: true,
                 google: false,
                 facebook: false,
-            })
+            });
             if (user) {
-                const tokenRecovery = recoveryToken(email)
+                const tokenRecovery = recoveryToken(email);
                 const result = await this.user.findOneAndUpdate(
                     { email, active: true },
                     { tokenRecovery },
                     updateOptions,
-                )
-                const responseEmail = await forgotPass(email, tokenRecovery)
-                return responseEmail
+                );
+                const responseEmail = await forgotPass(email, tokenRecovery);
+                return responseEmail;
             } else {
-                return user
+                return user;
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 
     async recoveryPassword(data) {
-        const { email, password, token } = data
+        const { email, password, token } = data;
         try {
-            let user = await this.user.findOne({ email, tokenRecovery: token, active: true })
+            let user = await this.user.findOne({
+                email,
+                tokenRecovery: token,
+                active: true,
+            });
             if (user) {
-                let newPassword = bcrypt.hashSync(password)
+                let newPassword = bcrypt.hashSync(password);
                 let userResponse = await this.user.findOneAndUpdate(
                     { email, active: true },
                     { password: newPassword, tokenRecovery: null },
                     updateOptions,
-                )
+                );
                 if (userResponse) {
-                    const responseEmail = await passChanged(email)
-                    return responseEmail
+                    const responseEmail = await passChanged(email);
+                    return responseEmail;
                 }
             } else {
-                return user
+                return user;
             }
         } catch (err) {
-            throw err
+            throw err;
         }
     }
 }
 
-export default UserService
+export default UserService;
