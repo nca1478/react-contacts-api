@@ -7,13 +7,13 @@ WORKDIR /usr/src/app
 FROM base AS deps
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,id=s/42902a8c-c805-4c05-a041-276e765a479f-/root/npm,target=/root/.npm \
     npm ci --omit=dev
 
 FROM deps AS build
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
+    --mount=type=cache,id=s/42902a8c-c805-4c05-a041-276e765a479f-/root/npm,target=/root/.npm \
     npm ci
 COPY . .
 RUN npm run build
