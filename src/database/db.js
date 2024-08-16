@@ -7,7 +7,7 @@ const debug = require('debug')('contacts-api:DB');
 
 // Enviroment
 const dbUri =
-    process.env.ENV === 'development'
+    process.env.ENV === 'dev'
         ? process.env.DB_URL_DEV
         : process.env.DB_URL_PROD;
 

@@ -5,6 +5,7 @@ services:
         container_name: contacts-api
         build:
             context: .
+            target: ${ENV}
         restart: always
         environment:
             NODE_ENV: production
@@ -22,6 +23,11 @@ services:
             GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
         ports:
             - 4000:4000
+            - 9229:9229
+        volumes:
+            - ./src:/usr/src/app/src
+        depends_on:
+            - db
     db:
         container_name: contacts-db
         image: mongo:5

@@ -2,11 +2,11 @@
     "name": "contacts-api",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/app.js",
     "scripts": {
-        "start": "babel-node api/app.js",
-        "dev": "nodemon --exec babel-node api/app.js",
-        "build": "babel api/ --out-dir build",
+        "start": "babel-node src/app.js",
+        "dev": "nodemon --inspect=0.0.0.0:9229 -L --exec babel-node src/app.js",
+        "build": "babel src/ --out-dir build",
         "serve": "node build/app.js"
     },
     "keywords": [],
