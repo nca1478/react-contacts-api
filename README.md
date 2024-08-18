@@ -43,16 +43,33 @@
 
 ## Requerimientos
 
--   Nodejs v14 o superior.
+-   Nodejs v12.13.0
+-   Docker Destop.
 
-## Instalación
+## Instalación de Api y Base de Datos
 
-> npm install
+## Variables de entorno
 
-## Ejecutar la api
+-   Renombrar .env.example a .env.
+-   Agregar las credenciales al .env.
+-   Actualizar variable `ENV` a `dev` o `prod` sea el caso.
 
-> npm run dev
+## Opcion 1: Instalar Api y DB
+
+-   Copiar todos los archivos de la carpeta docker a la raíz.
+-   Ejecutar el comando: `docker compose up --build -d`
+-   Para eliminar: `docker compose down --volumes`
+
+## Opcion 2: Instalar solo Base de Datos.
+
+-   Ejecuta: `docker compose -f db/docker-compose.yml up -d`
+-   Luego: `npm install` y `npm run dev`
+-   Eliminar DB: `docker compose -f db/docker-compose.yml down --volumes`
+
+## Pruebas de Endpoints en Postman
+
+-   Importar endpoints y variables de la carpeta postman
 
 ## Archivo de entrada
 
-> index.js
+> src/app.js

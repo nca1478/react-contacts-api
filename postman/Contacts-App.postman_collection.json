@@ -1,0 +1,535 @@
+{
+	"info": {
+		"_postman_id": "d8d0d265-0c6d-436f-9032-c8aedab6ce02",
+		"name": "Contacts-App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4677971"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nelson Cadenas\",\r\n    \"email\": \"nca1478@gmail.com\",\r\n    \"password\": \"V14006016nca**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/users",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/users/f300d4d7-e2f1-4276-86ba-5bb39d06f750",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"f300d4d7-e2f1-4276-86ba-5bb39d06f750"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lucia Marcozzi\",\r\n    \"email\": \"luciamarcozzi1234@gmail.com\",\r\n    \"password\": \"V14006016nca**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users/update",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/users/1a7718fc-540f-4508-8dc5-b87e7a0da527",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"1a7718fc-540f-4508-8dc5-b87e7a0da527"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Local",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if( jsonData.success ){\r",
+									"    pm.environment.set(\"token\", jsonData.data.token);\r",
+									"}\r",
+									"else{\r",
+									"    console.log('The token was not updated');\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"nca1478@gmail.com\",\r\n    \"password\": \"V14006016nca**\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Google",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if( jsonData.success ){\r",
+									"    pm.environment.set(\"token\", jsonData.data.token);\r",
+									"}\r",
+									"else{\r",
+									"    console.log('The token was not updated');\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tokenId\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1ODI4YzU5Mjg0YTY5YjU0YjI3NDgzZTQ4N2MzYmQ0NmNkMmEyYjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjk5NDkxMDE4MDUzLXYzOTNzajg3bWVwbDB0YnRsZG9mbmw4N245NHAxamx1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjk5NDkxMDE4MDUzLXYzOTNzajg3bWVwbDB0YnRsZG9mbmw4N245NHAxamx1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE3NDY2NTgxMDEwMjc0MjExODk0IiwiZW1haWwiOiJuY2ExNDc4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoia21udHJ4dVNuM3VyU1A4Ny1ybnM5USIsIm5hbWUiOiJOZWxzb24gQ2FkZW5hcyIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHamhhcWRVVURGSUNCMlBUSjd1NEFwVjZsYmpPSm5kVFptaHgzNzFaZz1zOTYtYyIsImdpdmVuX25hbWUiOiJOZWxzb24iLCJmYW1pbHlfbmFtZSI6IkNhZGVuYXMiLCJsb2NhbGUiOiJlcyIsImlhdCI6MTYzNTg4OTI1OSwiZXhwIjoxNjM1ODkyODU5LCJqdGkiOiJkYjliNTY1OWVhZGE4OWZlMTQ4ZmYyNzU1ODkzNmQ1OTg0NjA0OWJlIn0.pqAcDkH1P7pBV48pxuuDi_2CEIkaGHv29GeXJef5Sos7GDqT27tXBvlikN0QBpeqnxO3tBhU_Lpij8EkyLp1lzD3bbZGCOon0sVp2xmoIbp1YPYcN6wOP09yoO8oFAZbR1A0_W1U8b5wjAmhwV47HJLkU6PrlXg_E0H0yGAD86gIGbOXuKB7N9UJOGQ4PiWd8AFvTjX--qC6NNW-ZH-Hzs_Xby3hSKyeRXscDhqQTSa4SO-rwhc9jN-iWHSV0DPYwS_vPoIzsP7MEd9E9VZyuQdi8ItYAH2XbF8CtA_ee_EAT2f7GqtxJdUX9-43sgUxtPobVcifq9JcPRV42q17cg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users/google",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Facebook",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"if( jsonData.success ){\r",
+									"    pm.environment.set(\"token\", jsonData.data.token);\r",
+									"}\r",
+									"else{\r",
+									"    console.log('The token was not updated');\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessToken\": \"EAAItv7YS7PkBAM1UBLkS0iQlb7uIsydWxhMDRtmHNanUeBRkySkO0NenOfySEm45YsPOFwWfCxZBup47ZBO0i9xwm7wnhIRXaGRfIQ4ZCF6RdRtGA2QEIppsBRKZC69jezcJqtdya8MZCLvVGhmJFPGNe4w6UrMURca1nwmJ5ZACvKIjqJynG1SeozGieIy4c2lY6Oq2RY0WvBmgAkndQz\",\r\n    \"userID\": \"10226088647018563\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users/facebook",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"facebook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Email Recovery Pass",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"luciamarcozzi1234@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/users/recovery",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"recovery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recovery password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "JSON Type",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"luciamarcozzi1234@gmail.com\",\n\t\"newPassword\": \"14006016nca\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/users/recovery/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2lhbWFyY296emkxMjM0QGdtYWlsLmNvbSIsImlzUmVjb3ZlcnkiOnRydWUsImlhdCI6MTYzNjUwMTEyMCwiZXhwIjoxNjM2NTg3NTIwfQ.Ybly-9t9MyKUQHBy1zvvLyoS-QtJYpFV3hE_eWqBoLU",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"users",
+								"recovery",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1Y2lhbWFyY296emkxMjM0QGdtYWlsLmNvbSIsImlzUmVjb3ZlcnkiOnRydWUsImlhdCI6MTYzNjUwMTEyMCwiZXhwIjoxNjM2NTg3NTIwfQ.Ybly-9t9MyKUQHBy1zvvLyoS-QtJYpFV3hE_eWqBoLU"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Create Contact",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test3\",\r\n    \"job\": \"Test3\",\r\n    \"phone1\": \"0277-2912478\",\r\n    \"phone2\": \"0277-2912478\",\r\n    \"celphone1\": \"0424-7728665\",\r\n    \"celphone2\": \"0424-7728665\",\r\n    \"address\": \"Colón Táchira\",\r\n    \"email\": \"test3@gmail.com\",\r\n    \"website\": \"http://www.test3.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/contacts",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contacts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/contacts?page=1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contacts by Name",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/contacts/search",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count Contacts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/contacts/count",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contact by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/contacts/616f7ed12cfb47b4da38e35e",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts",
+								"616f7ed12cfb47b4da38e35e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Libia Araque\",\r\n    \"job\": \"Ama de Casa\",\r\n    \"phone1\": \"0277-2912478\",\r\n    \"phone2\": \"0277-2912478\",\r\n    \"celphone1\": \"0416-4769174\",\r\n    \"celphone2\": \"0414-7539750\",\r\n    \"address\": \"San Juan de Colón\",\r\n    \"email\": \"libia2752@gmail.com\",\r\n    \"website\": \"https://www.libia-araque.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/contacts/616f7ed12cfb47b4da38e35e",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts",
+								"616f7ed12cfb47b4da38e35e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "jwt {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/contacts/616f7ed12cfb47b4da38e35e",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"contacts",
+								"616f7ed12cfb47b4da38e35e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
