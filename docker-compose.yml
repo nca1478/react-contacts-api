@@ -1,14 +1,13 @@
 version: '3.9'
 
 services:
-    server:
-        container_name: contacts-api
+    api:
+        container_name: 'contacts-api'
         build:
             context: .
-            target: ${ENV}
-        restart: always
+            dockerfile: Dockerfile
         environment:
-            NODE_ENV: production
+            NODE_ENV: ${ENV}
             SESSION_SECRET: ${SESSION_SECRET}
             PORT: ${PORT}
             DB_URL_PROD: ${DB_URL_PROD}
@@ -28,13 +27,16 @@ services:
             - ./src:/usr/src/app/src
         depends_on:
             - db
+
     db:
-        container_name: contacts-db
+        container_name: 'contacts-db'
         image: mongo:5
         restart: always
-        ports:
-            - 27017:27017
-        environment:
-            MONGODB_DATABASE: contacts-db
         volumes:
             - ./data:/data/db
+        environment:
+            MONGODB_DATABASE: contacts-db
+        ports:
+            - 27017:27017
+volumes:
+    data:
