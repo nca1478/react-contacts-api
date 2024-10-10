@@ -56,19 +56,19 @@
 
 ## Opcion 1: Instalar Api y DB
 
--   Copiar todos los archivos de la carpeta docker a la raíz.
+-   Crear base de datos: `docker compose -f db/docker-compose.yml up --build -d`
+-   Eliminar container: `docker compose -f db/docker-compose.yml down`
+-   Instalar dependencias: `npm install`
+-   Correr api: `npm run dev`
+
+## Opcion 2: Instalar Api y DB (docker dev)
+
 -   Ejecutar el comando: `docker compose up --build -d`
 -   Para eliminar: `docker compose down --volumes`
 
-## Opcion 2: Instalar solo Base de Datos.
+## Opcion 3: Instalar Api (docker prod)
 
--   Ejecuta: `docker compose -f db/docker-compose.yml up -d`
--   Luego: `npm install` y `npm run dev`
--   Eliminar DB: `docker compose -f db/docker-compose.yml down --volumes`
-
-## Pruebas de Endpoints en Postman
-
--   Importar endpoints y variables de la carpeta postman
+-   Ejecutar el comando: `docker compose -f docker-compose.prod.yml up --build -d`
 
 ## Archivo de entrada
 
